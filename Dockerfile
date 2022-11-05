@@ -5,6 +5,14 @@ LABEL email = "gcahn79@w-mall.co.kr"
 LABEL version = "jdk-17.0.5+8"
 LABEL description = "jdk-17.0.5+8 upgrade"
 
+
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+RUN apk add --no-cache fontconfig libretls musl-locales musl-locales-lang ttf-dejavu tzdata zlib && \
+    rm -rf /var/cache/apk/* \
+ENV JAVA_VERSION=jdk-17.0.5+8
+
 RUN set -eux && \
     ARCH="$(apk --print-arch)" && \
     case "${ARCH}" in \
@@ -30,12 +38,6 @@ RUN set -eux && \
     rm /tmp/openjdk.tar.gz;
 
 
-ENV JAVA_HOME=/opt/java/openjdk
-ENV PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
-RUN apk add --no-cache fontconfig libretls musl-locales musl-locales-lang ttf-dejavu tzdata zlib && \
-    rm -rf /var/cache/apk/* \
-ENV JAVA_VERSION=jdk-17.0.5+8
 
 # RUN echo Verifying install ... && \
     # fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)" && \
