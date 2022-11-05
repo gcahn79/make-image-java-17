@@ -35,7 +35,7 @@ RUN set -eux && \
     tar --extract --file /tmp/openjdk.tar.gz --directory "$JAVA_HOME" --strip-components 1 --no-same-owner && \
     rm /tmp/openjdk.tar.gz;
     
-RUN echo Verifying install ... && \
+# RUN echo Verifying install ... && \
     # fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)" && \
     # [ "$fileEncoding" = 'UTF-8' ] && \
     # rm -rf ~/.java     && \
@@ -45,4 +45,4 @@ RUN echo Verifying install ... && \
     # java --version && \
     # echo Complete.
 
-CMD ["jshell"]
+CMD ["/usr/local/bin/jshell"]
