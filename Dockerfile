@@ -36,8 +36,8 @@ RUN set -eux && \
     rm /tmp/openjdk.tar.gz;
     
 RUN echo Verifying install ... && \
-    fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)" && \
-    [ "$fileEncoding" = 'UTF-8' ] && \
+    # fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)" && \
+    # [ "$fileEncoding" = 'UTF-8' ] && \
     rm -rf ~/.java     && \
     echo javac --version && \
     javac --version && \
