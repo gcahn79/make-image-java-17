@@ -11,8 +11,8 @@ ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 RUN apk add --no-cache fontconfig libretls musl-locales musl-locales-lang ttf-dejavu tzdata zlib && \
     rm -rf /var/cache/apk/* \
 ENV JAVA_VERSION=jdk-17.0.5+8
-RUN set -eux; \
-    ARCH="$(apk --print-arch)"; \
+RUN set -eux && \
+    ARCH="$(apk --print-arch)" && \
     case "${ARCH}" in \
       amd64|x86_64) \
         ESUM='cb154396ff3bfb6a9082e3640c564643d31ecae1792fab0956149ed5258ad84b'; \
@@ -29,15 +29,15 @@ RUN set -eux; \
         exit 1; \
         ;; \
     esac; \
-    wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
-    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
-    mkdir -p "$JAVA_HOME"; \
-    tar --extract --file /tmp/openjdk.tar.gz --directory "$JAVA_HOME" --strip-components 1 --no-same-owner; \
+    wget -O /tmp/openjdk.tar.gz ${BINARY_URL} && \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c - && \
+    mkdir -p "$JAVA_HOME" && \
+    tar --extract --file /tmp/openjdk.tar.gz --directory "$JAVA_HOME" --strip-components 1 --no-same-owner && \
     rm /tmp/openjdk.tar.gz;
     
 RUN echo Verifying install ... && \
-    fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)"; \
-    [ "$fileEncoding" = 'UTF-8' ]; \
+    fileEncoding="$(echo 'System.out.println(System.getProperty("file.encoding"))' | jshell -s -)" && \
+    [ "$fileEncoding" = 'UTF-8' ] && \
     rm -rf ~/.java     && \
     echo javac --version && \
     javac --version && \
